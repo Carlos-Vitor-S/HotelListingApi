@@ -1,0 +1,38 @@
+﻿@HotelListing.Api_HostAddress = https://localhost:7018
+
+GET {{HotelListing.Api_HostAddress}}/Hotel
+
+###
+
+
+
+POST {{HotelListing.Api_HostAddress}}/Hotel
+Content-Type: application/json
+
+{
+  "id": 5,
+  "name": "Hotel Tropical",
+  "address": "Av. Beira-Mar, 1000 - Fortaleza",
+  "rating": 4.3
+}
+
+###
+
+
+
+PUT {{HotelListing.Api_HostAddress}}/Hotel
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Hotel Tropical2",
+  "address": "Av. Beira-Mar, 1000 - Fortaleza",
+  "rating": 4.3
+}
+
+###
+
+@id=2
+DELETE {{HotelListing.Api_HostAddress}}/Hotel/{{id}}
+
+###
