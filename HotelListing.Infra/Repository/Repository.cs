@@ -1,11 +1,6 @@
 ﻿using HotelListing.Infra.DataContext;
 using HotelListing.Infra.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelListing.Infra.Repository
 {
@@ -43,8 +38,8 @@ namespace HotelListing.Infra.Repository
 
         public async Task Update(T element)
         {
-           _context.Set<T>().Update(element);
-           await SaveChangesAsync();
+            _context.Set<T>().Update(element);
+            await SaveChangesAsync();
         }
 
         public async Task SaveChangesAsync()

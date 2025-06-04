@@ -1,11 +1,6 @@
 ﻿using HotelListing.Application.Interfaces;
 using HotelListing.Domain.Models;
 using HotelListing.Infra.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelListing.Application.Applications
 {
@@ -30,7 +25,7 @@ namespace HotelListing.Application.Applications
 
         public async Task<IEnumerable<Country>> GetAll()
         {
-           return await _countryService.GetAll();
+            return await _countryService.GetAll();
         }
 
         public async Task<Country> GetById(int id)
@@ -43,6 +38,6 @@ namespace HotelListing.Application.Applications
             throw new NotImplementedException();
         }
 
-      
+
     }
 }
