@@ -7,6 +7,6 @@
         Task Create(T element);
         Task Update(T element);
         Task Delete(int id);
-        Task SaveChanges();
+        Task SaveChangesAsync();
     }
 }
