@@ -2,9 +2,9 @@
 using HotelListing.Application.Applications;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Mappings;
+using HotelListing.Domain.Interfaces;
 using HotelListing.Domain.Services;
 using HotelListing.Infra.DataContext;
-using HotelListing.Infra.Interfaces;
 using HotelListing.Infra.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,10 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<HotelListingContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddOpenApi();
 
-//Repositories
+//Repositories / Services / Applications
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICountryApplication, CountryApplication>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddAutoMapper(typeof(CountryProfile));
 

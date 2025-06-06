@@ -8,6 +8,5 @@ namespace HotelListing.Application.DTOs.CountryDTOs
         public string Name { get; set; }
         public string ShortName { get; set; }
 
-
     }
 }

@@ -1,49 +1,86 @@
-﻿using HotelListing.Domain.Exceptions.CountryExceptions;
+﻿
+using HotelListing.Domain.Exceptions.CountryExceptions;
+using HotelListing.Domain.Interfaces;
 using HotelListing.Domain.Models;
-using HotelListing.Infra.Interfaces;
 
 namespace HotelListing.Domain.Services
 {
     public class CountryService : ICountryService
     {
-        IRepository<Country> _countryRepository;
+        private readonly ICountryRepository _countryRepository;
 
-        public CountryService(IRepository<Country> countryRepository)
+        public CountryService(ICountryRepository countryRepository)
         {
             _countryRepository = countryRepository;
         }
 
-        public async Task Create(Country country)
+        public async Task CreateAsync(Country country)
         {
-            var existingCountry = await _countryRepository.GetById(country.Id);
+            var countryExists = await Exists(country.Id);
 
-            if (existingCountry != null)
+            if (countryExists)
             {
-                throw new CountryException($"Country already exists and cannot be created again");
+                throw new CountryException("Country already exists and cannot be added again.");
             }
 
-            await _countryRepository.Create(country);
+            await _countryRepository.CreateAsync(country);
         }
 
-        public Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
+            var countryExists = await Exists(id);
 
-            throw new NotImplementedException();
+            if (!countryExists)
+            {
+                throw new CountryException("Country doesnt exist and cannot be removed.");
+            }
+
+            await _countryRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<bool> Exists(int id)
         {
-            return await _countryRepository.GetAll();
+            return await _countryRepository.Exists(id);
         }
 
-        public async Task<Country> GetById(int id)
+        public async Task<Country> Get(int id)
         {
-            return await _countryRepository.GetById(id);
+            var countryExists = await Exists(id);
+
+            if (!countryExists)
+            {
+                throw new CountryException("Country doesnt exist.");
+            }
+            return await _countryRepository.Get(id);
         }
 
-        public Task Update(Country country)
+        public async Task<IEnumerable<Country>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _countryRepository.GetAllAsync();
+        }
+
+        public async Task<Country> GetDetails(int id)
+        {
+            var countryExists = await Exists(id);
+
+            if (!countryExists)
+            {
+                throw new CountryException("Country doesnt exist.");
+            }
+
+            return await _countryRepository.GetDetails(id);
+        }
+
+        public async Task UpdateAsync(Country country)
+        {
+            var countryExists = await Exists(country.Id);
+
+            if (!countryExists)
+            {
+                throw new CountryException("Country doesnt exist and cannot be Udpated.");
+            }
+
+            await _countryRepository.UpdateAsync(country);
         }
     }
 }

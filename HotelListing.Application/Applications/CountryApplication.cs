@@ -1,6 +1,6 @@
 ﻿using HotelListing.Application.Interfaces;
+using HotelListing.Domain.Interfaces;
 using HotelListing.Domain.Models;
-using HotelListing.Infra.Interfaces;
 
 namespace HotelListing.Application.Applications
 {
@@ -13,31 +13,39 @@ namespace HotelListing.Application.Applications
             _countryService = countryService;
         }
 
-        public async Task Create(Country country)
+        public async Task CreateAsync(Country country)
         {
-            await _countryService.Create(country);
+            await _countryService.CreateAsync(country);
         }
 
-        public Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            await _countryService.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<bool> Exists(int id)
         {
-            return await _countryService.GetAll();
+            return await _countryService.Exists(id);
         }
 
-        public async Task<Country> GetById(int id)
+        public async Task<Country> Get(int id)
         {
-            return await _countryService.GetById(id);
+            return await _countryService.Get(id);
         }
 
-        public Task Update(Country country)
+        public async Task<IEnumerable<Country>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _countryService.GetAllAsync();
         }
 
+        public async Task<Country> GetDetails(int id)
+        {
+            return await _countryService.GetDetails(id);
+        }
 
+        public async Task UpdateAsync(Country country)
+        {
+            await _countryService.UpdateAsync(country);
+        }
     }
 }

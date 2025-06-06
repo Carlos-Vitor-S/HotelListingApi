@@ -1,14 +1,15 @@
 ﻿using HotelListing.Domain.Models;
 
-namespace HotelListing.Infra.Interfaces
+namespace HotelListing.Domain.Interfaces
 {
     public interface ICountryService
     {
-        Task<Country> GetById(int id);
-        Task<IEnumerable<Country>> GetAll();
-        Task Create(Country country);
-        Task Update(Country country);
-        Task Delete(int id);
-
+        Task<Country> Get(int id);
+        Task<IEnumerable<Country>> GetAllAsync();
+        Task CreateAsync(Country country);
+        Task UpdateAsync(Country country);
+        Task DeleteAsync(int id);
+        Task<bool> Exists(int id);
+        Task<Country> GetDetails(int id);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
+using HotelListing.Domain.Exceptions.CountryExceptions;
 using HotelListing.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-
 namespace HotelListing.Api.Controllers
 {
     [ApiController]
@@ -13,37 +13,58 @@ namespace HotelListing.Api.Controllers
     {
 
         private readonly ICountryApplication _countryApplication;
-        private readonly IMapper _countryProfile;
-        public CountriesController(ICountryApplication countryApplication, IMapper countryProfile)
+        private readonly IMapper _mapper;
+
+        public CountriesController(ICountryApplication countryApplication, IMapper mapper)
         {
             _countryApplication = countryApplication;
-            _countryProfile = countryProfile;
+            _mapper = mapper;
         }
 
         [HttpGet]
-
-        public async Task<ActionResult<IEnumerable<Country>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetAll()
         {
-            var allCountries = await _countryApplication.GetAll();
-            return Ok(allCountries);
+            try
+            {
+                var countries = await _countryApplication.GetAllAsync();
+                var countriesDto = _mapper.Map<List<GetCountryDto>>(countries);
+                return Ok(countriesDto);
+            }
+            catch (CountryException countryException)
+            {
+                return NotFound(countryException.Message);
+            }
+
         }
 
         [HttpGet("{id}")]
-
-        public async Task<ActionResult<Country>> GetById(int id)
+        public async Task<ActionResult<GetCountryDetailsDto>> GetDetails(int id)
         {
-            var countryById = await _countryApplication.GetById(id);
-            return Ok(countryById);
+            try
+            {
+                var country = await _countryApplication.GetDetails(id);
+                var countryDto = _mapper.Map<GetCountryDetailsDto>(country);
+                return Ok(countryDto);
+            }
+            catch (CountryException countryException)
+            {
+                return NotFound(countryException.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Country>> Create([FromBody] CreateCountryDto createCountryDto)
+        public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto createCountryDto)
         {
-            var country = _countryProfile.Map<Country>(createCountryDto);
-
-            await _countryApplication.Create(country);
-            return CreatedAtAction("GetById", new { id = country.Id }, country);
+            try
+            {
+                var country = _mapper.Map<Country>(createCountryDto);
+                await _countryApplication.CreateAsync(country);
+                return CreatedAtAction(nameof(GetDetails), new { id = country.Id }, country);
+            }
+            catch (CountryException countryException)
+            {
+                return Conflict(countryException.Message);
+            }
         }
-
     }
 }

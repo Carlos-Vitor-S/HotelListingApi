@@ -1,12 +1,12 @@
-﻿namespace HotelListing.Infra.Interfaces
+﻿namespace HotelListing.Domain.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
-        Task Create(T element);
-        Task Update(T element);
-        Task Delete(int id);
-        Task SaveChangesAsync();
+        Task<T> Get(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task CreateAsync(T element);
+        Task UpdateAsync(T element);
+        Task DeleteAsync(int id);
+        Task<bool> Exists(int id);
     }
 }

@@ -1,5 +1,6 @@
-﻿using HotelListing.Infra.DataContext;
-using HotelListing.Infra.Interfaces;
+﻿using HotelListing.Domain.Interfaces;
+
+using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Infra.Repository
@@ -13,39 +14,45 @@ namespace HotelListing.Infra.Repository
             _context = context;
         }
 
-        public async Task Create(T element)
+        public async Task CreateAsync(T element)
         {
             await _context.Set<T>().AddAsync(element);
             await SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<T> GetById(int id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
-
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var element = await _context.Set<T>().FindAsync(id);
             _context.Set<T>().Remove(element);
             await SaveChangesAsync();
         }
 
-        public async Task Update(T element)
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T> Get(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task UpdateAsync(T element)
         {
             _context.Set<T>().Update(element);
             await SaveChangesAsync();
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<bool> Exists(int id)
+        {
+            var element = await Get(id);
+            return element != null;
+        }
+
+
+        private async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
-
     }
 }
