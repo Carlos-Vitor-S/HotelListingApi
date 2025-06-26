@@ -1,9 +1,9 @@
-﻿namespace HotelListing.Domain.Exceptions.CountryExceptions
+﻿namespace HotelListing.Domain.Exceptions
 {
     public class CountryException : Exception
     {
         public CountryException(string message)
-            : base($"{message}")
+            : base($"Country Exception : {message}")
         {
         }
     }

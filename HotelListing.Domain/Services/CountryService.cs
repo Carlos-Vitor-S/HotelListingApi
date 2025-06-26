@@ -1,6 +1,6 @@
-﻿
-using HotelListing.Domain.Exceptions.CountryExceptions;
-using HotelListing.Domain.Interfaces;
+﻿using HotelListing.Domain.Exceptions;
+using HotelListing.Domain.Interfaces.IRepositories;
+using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
 
 namespace HotelListing.Domain.Services

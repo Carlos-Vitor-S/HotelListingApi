@@ -1,4 +1,4 @@
-﻿using HotelListing.Domain.Interfaces;
+﻿using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Domain.Models;
 using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;

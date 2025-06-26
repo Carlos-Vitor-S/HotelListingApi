@@ -1,4 +1,4 @@
-﻿namespace HotelListing.Domain.Interfaces
+﻿namespace HotelListing.Domain.Interfaces.IRepositories
 {
     public interface IRepository<T> where T : class
     {

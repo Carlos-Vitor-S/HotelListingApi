@@ -1,5 +1,4 @@
-﻿using HotelListing.Domain.Interfaces;
-
+﻿using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,7 +47,6 @@ namespace HotelListing.Infra.Repository
             var element = await Get(id);
             return element != null;
         }
-
 
         private async Task SaveChangesAsync()
         {

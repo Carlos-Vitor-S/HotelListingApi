@@ -3,6 +3,7 @@ using System;
 using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelListing.Infra.Migrations
 {
     [DbContext(typeof(HotelListingContext))]
-    partial class HotelListingContextModelSnapshot : ModelSnapshot
+    [Migration("20250617181624_changeDefaultRolesModel")]
+    partial class changeDefaultRolesModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,15 +103,15 @@ namespace HotelListing.Infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1a111111-1111-1111-1111-111111111111",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
+                            Id = "03681379-517d-49bc-97fd-4611fbb228e7",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2b222222-2222-2222-2222-222222222222",
-                            Name = "Normal User",
-                            NormalizedName = "NORMAL USER"
+                            Id = "64710dca-6c15-45cc-9b67-fa8c77740fdb",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 

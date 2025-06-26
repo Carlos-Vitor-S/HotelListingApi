@@ -1,5 +1,5 @@
 ﻿using HotelListing.Application.Interfaces;
-using HotelListing.Domain.Interfaces;
+using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
 
 namespace HotelListing.Application.Applications
@@ -20,6 +20,7 @@ namespace HotelListing.Application.Applications
 
         public async Task DeleteAsync(int id)
         {
+
             await _countryService.DeleteAsync(id);
         }
 

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
-using HotelListing.Domain.Exceptions.CountryExceptions;
+using HotelListing.Domain.Exceptions;
 using HotelListing.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace HotelListing.Api.Controllers
 {
@@ -53,6 +54,7 @@ namespace HotelListing.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto createCountryDto)
         {
             try

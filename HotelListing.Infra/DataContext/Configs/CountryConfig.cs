@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
-
 namespace HotelListing.Infra.DataContext.Configurations
 {
     class CountryConfig : IEntityTypeConfiguration<Country>
