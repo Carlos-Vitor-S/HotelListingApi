@@ -1,4 +1,5 @@
-﻿using HotelListing.Domain.Interfaces.IRepositories;
+﻿
+using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Domain.Models;
 
 namespace HotelListing.Domain.Interfaces.IServices

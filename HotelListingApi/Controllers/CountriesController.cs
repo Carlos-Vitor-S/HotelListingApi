@@ -25,48 +25,46 @@ namespace HotelListing.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetAll()
         {
-            try
-            {
-                var countries = await _countryApplication.GetAllAsync();
-                var countriesDto = _mapper.Map<List<GetCountryDto>>(countries);
-                return Ok(countriesDto);
-            }
-            catch (CountryException countryException)
-            {
-                return NotFound(countryException.Message);
-            }
 
+            var countries = await _countryApplication.GetAllAsync();
+            var countriesDto = _mapper.Map<List<GetCountryDto>>(countries);
+            return Ok(countriesDto);
+        }
+
+        [HttpGet("paged")]
+        public async Task<ActionResult<PagedResult<GetCountryDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
+        {
+            var pagedCountries = await _countryApplication.GetAllByPageAsync(paginationParameters);
+
+            var pagedCountriesDto = new PagedResult<GetCountryDto>
+            {
+                Items = _mapper.Map<List<GetCountryDto>>(pagedCountries.Items),
+                TotalItems = pagedCountries.TotalItems,
+                CurrentPage = pagedCountries.CurrentPage,
+                PageSize = pagedCountries.PageSize
+            };
+
+            return Ok(pagedCountriesDto);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<GetCountryDetailsDto>> GetDetails(int id)
         {
-            try
-            {
-                var country = await _countryApplication.GetDetails(id);
-                var countryDto = _mapper.Map<GetCountryDetailsDto>(country);
-                return Ok(countryDto);
-            }
-            catch (CountryException countryException)
-            {
-                return NotFound(countryException.Message);
-            }
+            var country = await _countryApplication.GetDetails(id);
+            var countryDto = _mapper.Map<GetCountryDetailsDto>(country);
+            return Ok(countryDto);
         }
 
         [HttpPost]
-        [Authorize]
+
         public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto createCountryDto)
         {
-            try
-            {
-                var country = _mapper.Map<Country>(createCountryDto);
-                await _countryApplication.CreateAsync(country);
-                return CreatedAtAction(nameof(GetDetails), new { id = country.Id }, country);
-            }
-            catch (CountryException countryException)
-            {
-                return Conflict(countryException.Message);
-            }
+
+            var country = _mapper.Map<Country>(createCountryDto);
+            await _countryApplication.CreateAsync(country);
+            return CreatedAtAction(nameof(GetDetails), new { id = country.Id }, country);
+
+
         }
     }
 }

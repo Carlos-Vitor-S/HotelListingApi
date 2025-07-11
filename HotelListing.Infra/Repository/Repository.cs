@@ -1,6 +1,8 @@
 ﻿using HotelListing.Domain.Interfaces.IRepositories;
+using HotelListing.Domain.Models;
 using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HotelListing.Infra.Repository
 {
@@ -51,6 +53,26 @@ namespace HotelListing.Infra.Repository
         private async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PagedResult<T>> GetAllByPageAsync(PaginationParameters paginationParameters)
+        {
+            var skipCount = (paginationParameters.PageNumber - 1) * paginationParameters.PageSize;
+
+            var totalItems = await _context.Set<T>().CountAsync();
+            var items = await _context.Set<T>()
+                 .Skip(skipCount)
+                 .Take(paginationParameters.PageSize)
+                 .ToListAsync();
+
+            return new PagedResult<T>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                CurrentPage = paginationParameters.PageNumber,
+                PageSize = paginationParameters.PageSize
+            };
+
         }
     }
 }

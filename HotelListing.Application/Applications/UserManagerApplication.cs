@@ -4,13 +4,7 @@ using HotelListing.Application.DTOs.UserDTOs;
 using HotelListing.Application.Interfaces;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
-using HotelListing.Domain.Services;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace HotelListing.Application.Applications
 {

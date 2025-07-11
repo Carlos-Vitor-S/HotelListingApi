@@ -1,4 +1,5 @@
 ﻿using HotelListing.Domain.Exceptions;
+using HotelListing.Domain.Interfaces;
 using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
@@ -18,9 +19,9 @@ namespace HotelListing.Domain.Services
         {
             var countryExists = await Exists(country.Id);
 
-            if (countryExists)
+            if (!countryExists)
             {
-                throw new CountryException("Country already exists and cannot be added again.");
+                throw new NotFoundExceptionCustom(key: country.Id.ToString(), name: "Country");
             }
 
             await _countryRepository.CreateAsync(country);
@@ -32,7 +33,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new CountryException("Country doesnt exist and cannot be removed.");
+                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
             }
 
             await _countryRepository.DeleteAsync(id);
@@ -49,7 +50,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new CountryException("Country doesnt exist.");
+                throw new NotFoundExceptionCustom(key: id.ToString() , name : "Country");
             }
             return await _countryRepository.Get(id);
         }
@@ -59,13 +60,18 @@ namespace HotelListing.Domain.Services
             return await _countryRepository.GetAllAsync();
         }
 
+        public async Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters)
+        {
+            return await _countryRepository.GetAllByPageAsync(paginationParameters);
+        }
+
         public async Task<Country> GetDetails(int id)
         {
             var countryExists = await Exists(id);
 
             if (!countryExists)
             {
-                throw new CountryException("Country doesnt exist.");
+                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
             }
 
             return await _countryRepository.GetDetails(id);
@@ -77,7 +83,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new CountryException("Country doesnt exist and cannot be Udpated.");
+                throw new NotFoundExceptionCustom(key: country.Id.ToString(), name: "Country");
             }
 
             await _countryRepository.UpdateAsync(country);

@@ -12,8 +12,6 @@ namespace HotelListing.Domain.Interfaces.IRepositories
         Task<IList<string>> GetRolesAsync(IdentityUser identityUser);
         Task<IList<Claim>> GetClaimsAsync(IdentityUser identityUser);
         Task<IdentityUser> FindByEmailAsync(string email);
-
-        Task<string> RefreshToken();
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using HotelListing.Domain.Models;
+﻿
+using HotelListing.Domain.Models;
 
 namespace HotelListing.Application.Interfaces
 {
@@ -11,5 +12,6 @@ namespace HotelListing.Application.Interfaces
         Task DeleteAsync(int id);
         Task<bool> Exists(int id);
         Task<Country> GetDetails(int id);
+        Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters);
     }
 }

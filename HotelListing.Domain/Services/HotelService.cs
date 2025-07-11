@@ -28,6 +28,11 @@ namespace HotelListing.Domain.Services
 
         public async Task DeleteAsync(int id)
         {
+            var hotelExists = await Exists(id);
+            if (!hotelExists)
+            {
+                throw new HotelException("Hotel doesnt exist to be removed.");
+            }
             await _hotelRepository.DeleteAsync(id);
         }
 
@@ -38,7 +43,7 @@ namespace HotelListing.Domain.Services
 
         public async Task<Hotel> Get(int id)
         {
-            var hotelExists = await Exists(id);
+            var hotelExists = await _hotelRepository.Exists(id);
 
             if (!hotelExists)
             {
@@ -52,9 +57,20 @@ namespace HotelListing.Domain.Services
             return await _hotelRepository.GetAllAsync();
         }
 
+        public Task<PagedResult<Hotel>> GetAllByPageAsync(PaginationParameters queryParameters)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task UpdateAsync(Hotel hotel)
         {
+            var hotelExists = await _hotelRepository.Exists(hotel.Id);
+
+            if (!hotelExists)
+            {
+                throw new HotelException("Hotel doesnt exist to be updated.");
+            }
+            
             await _hotelRepository.UpdateAsync(hotel);
         }
     }

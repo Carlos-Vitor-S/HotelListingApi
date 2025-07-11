@@ -10,6 +10,7 @@ namespace HotelListing.Application.Mappings
         {
             CreateMap<Hotel, GetHotelDto>().ReverseMap();
             CreateMap<Hotel, CreateHotelDto>().ReverseMap();
+            CreateMap<Hotel, UpdateHotelDto>().ReverseMap();
         }
     }
 }

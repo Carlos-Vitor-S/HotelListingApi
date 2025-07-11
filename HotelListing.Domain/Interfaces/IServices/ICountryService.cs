@@ -11,5 +11,6 @@ namespace HotelListing.Domain.Interfaces.IServices
         Task DeleteAsync(int id);
         Task<bool> Exists(int id);
         Task<Country> GetDetails(int id);
+        Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters);
     }
 }

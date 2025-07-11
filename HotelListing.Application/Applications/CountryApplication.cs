@@ -39,6 +39,11 @@ namespace HotelListing.Application.Applications
             return await _countryService.GetAllAsync();
         }
 
+        public async Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters)
+        {
+            return await _countryService.GetAllByPageAsync(paginationParameters);
+        }
+
         public async Task<Country> GetDetails(int id)
         {
             return await _countryService.GetDetails(id);

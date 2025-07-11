@@ -1,3 +1,4 @@
+using HotelListing.Api.Middleware;
 using HotelListing.Application.Applications;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Mappings;
@@ -67,6 +68,7 @@ builder.Services.AddScoped<IUserManagerApplication, UserManagerApplication>();
 
 builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile) , typeof(UserProfile));
 
+
 var app = builder.Build();
 
 
@@ -76,7 +78,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
-
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
