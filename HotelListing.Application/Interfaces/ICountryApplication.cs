@@ -1,17 +1,18 @@
 ﻿
+using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Domain.Models;
 
 namespace HotelListing.Application.Interfaces
 {
     public interface ICountryApplication
     {
-        Task<Country> Get(int id);
-        Task<IEnumerable<Country>> GetAllAsync();
-        Task CreateAsync(Country country);
-        Task UpdateAsync(Country country);
+        Task<GetCountryDto> Get(int id);
+        Task<IEnumerable<GetCountryDto>> GetAllAsync();
+        Task CreateAsync(CreateCountryDto createCountryDto);
+        Task UpdateAsync(int id, UpdateCountryDto updateCountryDto);
         Task DeleteAsync(int id);
         Task<bool> Exists(int id);
-        Task<Country> GetDetails(int id);
-        Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters);
+        Task<GetCountryDetailsDto> GetDetails(int id);
+        Task<PagedResult<GetCountryDto>> GetAllByPageAsync(PaginationParameters paginationParameters);
     }
 }

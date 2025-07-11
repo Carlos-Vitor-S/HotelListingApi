@@ -2,7 +2,6 @@
 using HotelListing.Application.DTOs.ApiAuthDTOs;
 using HotelListing.Application.DTOs.UserDTOs;
 using HotelListing.Application.Interfaces;
-using HotelListing.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelListing.Api.Controllers

@@ -66,7 +66,7 @@ builder.Services.AddScoped<ICountryApplication, CountryApplication>();
 builder.Services.AddScoped<IHotelApplication, HotelApplication>();
 builder.Services.AddScoped<IUserManagerApplication, UserManagerApplication>();
 
-builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile) , typeof(UserProfile));
+builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile), typeof(UserProfile));
 
 
 var app = builder.Build();

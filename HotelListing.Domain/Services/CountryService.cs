@@ -1,5 +1,4 @@
 ﻿using HotelListing.Domain.Exceptions;
-using HotelListing.Domain.Interfaces;
 using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
@@ -19,7 +18,7 @@ namespace HotelListing.Domain.Services
         {
             var countryExists = await Exists(country.Id);
 
-            if (!countryExists)
+            if (countryExists)
             {
                 throw new NotFoundExceptionCustom(key: country.Id.ToString(), name: "Country");
             }
@@ -50,7 +49,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new NotFoundExceptionCustom(key: id.ToString() , name : "Country");
+                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
             }
             return await _countryRepository.Get(id);
         }

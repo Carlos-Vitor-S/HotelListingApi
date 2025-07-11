@@ -57,9 +57,9 @@ namespace HotelListing.Domain.Services
             return await _hotelRepository.GetAllAsync();
         }
 
-        public Task<PagedResult<Hotel>> GetAllByPageAsync(PaginationParameters queryParameters)
+        public async Task<PagedResult<Hotel>> GetAllByPageAsync(PaginationParameters paginationParameters)
         {
-            throw new NotImplementedException();
+            return await _hotelRepository.GetAllByPageAsync(paginationParameters);
         }
 
         public async Task UpdateAsync(Hotel hotel)
@@ -70,7 +70,7 @@ namespace HotelListing.Domain.Services
             {
                 throw new HotelException("Hotel doesnt exist to be updated.");
             }
-            
+
             await _hotelRepository.UpdateAsync(hotel);
         }
     }

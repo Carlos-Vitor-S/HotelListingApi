@@ -18,7 +18,7 @@ namespace HotelListing.Domain.Services
         {
             var identityUser = await _userManagerRepository.FindByEmailAsync(user.Email);
 
-            if (identityUser == null || ! await _userManagerRepository.CheckPasswordAsync(identityUser, user.Password))
+            if (identityUser == null || !await _userManagerRepository.CheckPasswordAsync(identityUser, user.Password))
             {
                 throw new UnauthorizedAccessException("Credenciais inválidas.");
             }

@@ -2,7 +2,6 @@
 using HotelListing.Domain.Exceptions;
 using HotelListing.Domain.Models;
 using Newtonsoft.Json;
-using System;
 using System.Net;
 
 namespace HotelListing.Api.Middleware

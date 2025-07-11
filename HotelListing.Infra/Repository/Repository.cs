@@ -2,7 +2,6 @@
 using HotelListing.Domain.Models;
 using HotelListing.Infra.DataContext;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HotelListing.Infra.Repository
 {
