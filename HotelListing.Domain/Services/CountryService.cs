@@ -20,7 +20,7 @@ namespace HotelListing.Domain.Services
 
             if (countryExists)
             {
-                throw new NotFoundExceptionCustom(key: country.Id.ToString(), name: "Country");
+                throw new ConflictCustomException(key: country.Id.ToString(), name: "Country");
             }
 
             await _countryRepository.CreateAsync(country);
@@ -32,7 +32,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
+                throw new NotFoundCustomException(key: id.ToString(), name: "Country");
             }
 
             await _countryRepository.DeleteAsync(id);
@@ -49,7 +49,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
+                throw new NotFoundCustomException(key: id.ToString(), name: "Country");
             }
             return await _countryRepository.Get(id);
         }
@@ -70,7 +70,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new NotFoundExceptionCustom(key: id.ToString(), name: "Country");
+                throw new NotFoundCustomException(key: id.ToString(), name: "Country");
             }
 
             return await _countryRepository.GetDetails(id);
@@ -82,7 +82,7 @@ namespace HotelListing.Domain.Services
 
             if (!countryExists)
             {
-                throw new NotFoundExceptionCustom(key: country.Id.ToString(), name: "Country");
+                throw new NotFoundCustomException(key: country.Id.ToString(), name: "Country");
             }
 
             await _countryRepository.UpdateAsync(country);

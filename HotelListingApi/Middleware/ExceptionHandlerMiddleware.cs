@@ -44,9 +44,13 @@ namespace HotelListing.Api.Middleware
 
             switch (exception)
             {
-                case NotFoundExceptionCustom notFoundExceptionCustom:
+                case NotFoundCustomException notFoundExceptionCustom:
                     statusCode = HttpStatusCode.NotFound;
                     errorDetails.ErrorType = "Not Found";
+                    break;
+                case ConflictCustomException conflictCustomException:
+                    statusCode = HttpStatusCode.Conflict;
+                    errorDetails.ErrorType = "Conflict";
                     break;
                 default:
                     break;

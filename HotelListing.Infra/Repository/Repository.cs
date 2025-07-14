@@ -59,10 +59,12 @@ namespace HotelListing.Infra.Repository
             var skipCount = (paginationParameters.PageNumber - 1) * paginationParameters.PageSize;
 
             var totalItems = await _context.Set<T>().CountAsync();
+
             var items = await _context.Set<T>()
-                 .Skip(skipCount)
-                 .Take(paginationParameters.PageSize)
-                 .ToListAsync();
+                .Skip(skipCount)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+
 
             return new PagedResult<T>
             {

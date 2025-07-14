@@ -20,7 +20,7 @@ namespace HotelListing.Domain.Services
 
             if (hotelExists)
             {
-                throw new HotelException("Hotel already exists and cannot be added again.");
+                throw new ConflictCustomException(key: hotel.Id.ToString(), name: "Hotel");
             }
 
             await _hotelRepository.CreateAsync(hotel);
@@ -29,10 +29,12 @@ namespace HotelListing.Domain.Services
         public async Task DeleteAsync(int id)
         {
             var hotelExists = await Exists(id);
+
             if (!hotelExists)
             {
-                throw new HotelException("Hotel doesnt exist to be removed.");
+                throw new NotFoundCustomException(key: id.ToString(), name: "Hotel");
             }
+
             await _hotelRepository.DeleteAsync(id);
         }
 
@@ -47,8 +49,9 @@ namespace HotelListing.Domain.Services
 
             if (!hotelExists)
             {
-                throw new HotelException("Hotel doesnt exist.");
+                throw new NotFoundCustomException(key: id.ToString(), name: "Hotel");
             }
+
             return await _hotelRepository.Get(id);
         }
 
@@ -68,7 +71,7 @@ namespace HotelListing.Domain.Services
 
             if (!hotelExists)
             {
-                throw new HotelException("Hotel doesnt exist to be updated.");
+                throw new NotFoundCustomException(key: hotel.Id.ToString(), name: "Hotel");
             }
 
             await _hotelRepository.UpdateAsync(hotel);

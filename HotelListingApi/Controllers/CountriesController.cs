@@ -3,6 +3,7 @@ using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
 using HotelListing.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 namespace HotelListing.Api.Controllers
 {
     [ApiController]
@@ -18,6 +19,7 @@ namespace HotelListing.Api.Controllers
             _countryApplication = countryApplication;
         }
 
+        [EnableQuery]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetAll()
         {
@@ -59,5 +61,8 @@ namespace HotelListing.Api.Controllers
             await _countryApplication.DeleteAsync(id);
             return NoContent();
         }
+
+
+
     }
 }

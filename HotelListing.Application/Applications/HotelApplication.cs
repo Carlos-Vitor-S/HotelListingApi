@@ -53,7 +53,5 @@ namespace HotelListing.Application.Applications
             _mapper.Map(updateHotelDto, hotel);
             await _hotelService.UpdateAsync(hotel);
         }
-
-
     }
 }

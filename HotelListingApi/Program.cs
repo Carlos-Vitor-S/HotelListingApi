@@ -9,6 +9,7 @@ using HotelListing.Infra.DataContext;
 using HotelListing.Infra.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -18,7 +19,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Serviços principais
 builder.Services.AddDataProtection();
-builder.Services.AddControllers();
+
 builder.Services.AddDbContext<HotelListingContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -68,6 +69,11 @@ builder.Services.AddScoped<IUserManagerApplication, UserManagerApplication>();
 
 builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile), typeof(UserProfile));
 
+//Filtering, selecting , ordering etc
+builder.Services.AddControllers().AddOData(options =>
+{
+    options.Select().Filter().OrderBy();
+});
 
 var app = builder.Build();
 
