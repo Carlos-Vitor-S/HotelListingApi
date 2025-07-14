@@ -1,4 +1,5 @@
 ﻿using HotelListing.Application.DTOs.HotelDTOs;
+using HotelListing.Application.Models;
 
 namespace HotelListing.Application.Interfaces
 {
@@ -10,5 +11,6 @@ namespace HotelListing.Application.Interfaces
         Task UpdateAsync(int id, UpdateHotelDto updateHotelDto);
         Task DeleteAsync(int id);
         Task<bool> Exists(int id);
+        Task<PagedResult<GetHotelDto>> GetAllByPageAsync(PaginationParameters paginationParameters);
     }
 }

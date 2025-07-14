@@ -6,11 +6,11 @@ namespace HotelListing.Domain.Interfaces.IServices
     {
         Task<Country> Get(int id);
         Task<IEnumerable<Country>> GetAllAsync();
+        IQueryable<Country> GetAllAsQueryable();
         Task CreateAsync(Country country);
         Task UpdateAsync(Country country);
         Task DeleteAsync(int id);
         Task<bool> Exists(int id);
         Task<Country> GetDetails(int id);
-        Task<PagedResult<Country>> GetAllByPageAsync(PaginationParameters paginationParameters);
     }
 }

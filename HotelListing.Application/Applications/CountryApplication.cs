@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
+using HotelListing.Application.Models;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Application.Applications
 {
@@ -32,6 +34,8 @@ namespace HotelListing.Application.Applications
             return await _countryService.Exists(id);
         }
 
+
+
         public async Task<GetCountryDto> Get(int id)
         {
             var country = await _countryService.Get(id);
@@ -48,17 +52,24 @@ namespace HotelListing.Application.Applications
 
         public async Task<PagedResult<GetCountryDto>> GetAllByPageAsync(PaginationParameters paginationParameters)
         {
-            var pagedCountries = await _countryService.GetAllByPageAsync(paginationParameters);
+            var skipCount = (paginationParameters.PageNumber - 1) * paginationParameters.PageSize;
+            var query = _countryService.GetAllAsQueryable();
+            var totalItems = await query.CountAsync();
 
-            var pagedCountriesDto = new PagedResult<GetCountryDto>
+            var pagedCountryItems = await query
+                .Skip(skipCount)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+
+            var pagedCountryItemsDto = _mapper.Map<List<GetCountryDto>>(pagedCountryItems);
+
+            return new PagedResult<GetCountryDto>
             {
-                Items = _mapper.Map<List<GetCountryDto>>(pagedCountries.Items),
-                TotalItems = pagedCountries.TotalItems,
-                CurrentPage = pagedCountries.CurrentPage,
-                PageSize = pagedCountries.PageSize
+                Items = pagedCountryItemsDto,
+                TotalItems = totalItems,
+                CurrentPage = paginationParameters.PageNumber,
+                PageSize = paginationParameters.PageSize
             };
-
-            return pagedCountriesDto;
         }
 
         public async Task<GetCountryDetailsDto> GetDetails(int id)

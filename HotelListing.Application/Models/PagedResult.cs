@@ -1,4 +1,4 @@
-﻿namespace HotelListing.Domain.Models
+﻿namespace HotelListing.Application.Models
 {
     public class PagedResult<T>
     {

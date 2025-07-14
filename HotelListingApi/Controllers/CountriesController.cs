@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
-using HotelListing.Domain.Models;
+using HotelListing.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 namespace HotelListing.Api.Controllers

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using HotelListing.Application.DTOs.HotelDTOs;
 using HotelListing.Application.Interfaces;
+using HotelListing.Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace HotelListing.Api.Controllers
 {
@@ -29,6 +31,13 @@ namespace HotelListing.Api.Controllers
             var hotel = await _hotelApplication.Get(id);
             return Ok(hotel);
         }
+        [EnableQuery]
+        [HttpGet("paged")]
+        public async Task<ActionResult<PagedResult<GetHotelDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
+        {
+            var hotels = await _hotelApplication.GetAllByPageAsync(paginationParameters);
+            return hotels;
+        }
 
         [HttpPost]
         public async Task<ActionResult<CreateHotelDto>> Create([FromBody] CreateHotelDto createHotelDto)
@@ -50,6 +59,8 @@ namespace HotelListing.Api.Controllers
             await _hotelApplication.DeleteAsync(id);
             return NoContent();
         }
+
+
 
     }
 }

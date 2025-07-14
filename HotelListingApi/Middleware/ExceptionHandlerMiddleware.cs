@@ -1,6 +1,6 @@
 ﻿
+using HotelListing.Application.Models;
 using HotelListing.Domain.Exceptions;
-using HotelListing.Domain.Models;
 using Newtonsoft.Json;
 using System.Net;
 

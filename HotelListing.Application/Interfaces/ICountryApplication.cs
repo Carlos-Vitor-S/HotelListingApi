@@ -1,6 +1,6 @@
 ﻿
 using HotelListing.Application.DTOs.CountryDTOs;
-using HotelListing.Domain.Models;
+using HotelListing.Application.Models;
 
 namespace HotelListing.Application.Interfaces
 {

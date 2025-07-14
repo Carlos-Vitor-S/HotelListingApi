@@ -55,14 +55,14 @@ namespace HotelListing.Domain.Services
             return await _hotelRepository.Get(id);
         }
 
+        public IQueryable<Hotel> GetAllAsQueryable()
+        {
+            return _hotelRepository.GetAllAsQueryable();
+        }
+
         public async Task<IEnumerable<Hotel>> GetAllAsync()
         {
             return await _hotelRepository.GetAllAsync();
-        }
-
-        public async Task<PagedResult<Hotel>> GetAllByPageAsync(PaginationParameters paginationParameters)
-        {
-            return await _hotelRepository.GetAllByPageAsync(paginationParameters);
         }
 
         public async Task UpdateAsync(Hotel hotel)
