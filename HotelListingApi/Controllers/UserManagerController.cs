@@ -22,11 +22,11 @@ namespace HotelListing.Api.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto registerUserDto , [FromQuery] string role)
         {
             try
             {
-                var authResponse = await _authManagerApplication.RegisterAsync(registerUserDto);
+                var authResponse = await _authManagerApplication.RegisterAsync(registerUserDto , role);
                 return Ok(authResponse);
             }
             catch (Exception ex)

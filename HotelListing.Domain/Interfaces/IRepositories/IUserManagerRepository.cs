@@ -5,7 +5,7 @@ namespace HotelListing.Domain.Interfaces.IRepositories
 {
     public interface IUserManagerRepository
     {
-        Task<IdentityResult> Register(User user);
+        Task<IdentityResult> Register(User user, string role);
         Task<AuthResponse> Login(User user);
         Task<string> GenerateTokenAsync(IdentityUser identityUser);
         Task<bool> CheckPasswordAsync(IdentityUser identityUser, string password);

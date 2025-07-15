@@ -36,7 +36,7 @@ namespace HotelListing.Infra.Repository
             };
         }
 
-        public async Task<IdentityResult> Register(User user)
+        public async Task<IdentityResult> Register(User user , string role)
         {
             var identityUser = new IdentityUser
             {
@@ -46,6 +46,10 @@ namespace HotelListing.Infra.Repository
 
             var result = await _userManager.CreateAsync(identityUser, user.Password);
 
+            if (result.Succeeded) { 
+                await _userManager.AddToRoleAsync(identityUser, role);
+            }
+          
             return result;
         }
 

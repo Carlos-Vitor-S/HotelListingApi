@@ -33,9 +33,9 @@ namespace HotelListing.Domain.Services
 
         }
 
-        public async Task<AuthResponse> RegisterAsync(User user)
+        public async Task<AuthResponse> RegisterAsync(User user , string role)
         {
-            var result = await _userManagerRepository.Register(user);
+            var result = await _userManagerRepository.Register(user , role);
 
             if (!result.Succeeded)
             {

@@ -7,6 +7,6 @@ namespace HotelListing.Application.Interfaces
     public interface IUserManagerApplication
     {
         Task<AuthResponse> LoginAsync(LoginUserDto loginUserDto);
-        Task<AuthResponse> RegisterAsync(RegisterUserDto registerUserDto);
+        Task<AuthResponse> RegisterAsync(RegisterUserDto registerUserDto , string role);
     }
 }
