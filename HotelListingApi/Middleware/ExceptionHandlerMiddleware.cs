@@ -52,6 +52,14 @@ namespace HotelListing.Api.Middleware
                     statusCode = HttpStatusCode.Conflict;
                     errorDetails.ErrorType = "Conflict";
                     break;
+                case UnauthorizedAccessCustomException unauthorizedAccessCustomException:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    errorDetails.ErrorType = "Unauthorized";
+                    break;
+                case ApplicationCustomException applicationCustomException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorDetails.ErrorType = "Bad Request";
+                    break;
                 default:
                     break;
             }

@@ -2,6 +2,8 @@
 using HotelListing.Application.DTOs.HotelDTOs;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Models;
+using HotelListing.Application.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 
@@ -13,24 +15,28 @@ namespace HotelListing.Api.Controllers
     {
         private readonly IHotelApplication _hotelApplication;
 
-        public HotelsController(IHotelApplication hotelApplication, IMapper mapper)
+        public HotelsController(IHotelApplication hotelApplication)
         {
             _hotelApplication = hotelApplication;
         }
 
-        [HttpGet]
+        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+        [HttpGet]  
         public async Task<ActionResult<IEnumerable<GetHotelDto>>> GetAll()
         {
             var hotels = await _hotelApplication.GetAllAsync();
             return Ok(hotels);
         }
 
-        [HttpGet("{id}")]
+        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+        [HttpGet("{id}")]     
         public async Task<ActionResult<GetHotelDto>> Get(int id)
         {
             var hotel = await _hotelApplication.Get(id);
             return Ok(hotel);
         }
+
+        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
         [EnableQuery]
         [HttpGet("paged")]
         public async Task<ActionResult<PagedResult<GetHotelDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
@@ -39,28 +45,27 @@ namespace HotelListing.Api.Controllers
             return hotels;
         }
 
-        [HttpPost]
+        [Authorize(Roles = Roles.Administrator)]
+        [HttpPost]      
         public async Task<ActionResult<CreateHotelDto>> Create([FromBody] CreateHotelDto createHotelDto)
         {
             await _hotelApplication.CreateAsync(createHotelDto);
             return Created("Hotel Created", createHotelDto);
         }
 
+        [Authorize(Roles = Roles.Administrator)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateHotelDto updateHotelDto)
         {
             await _hotelApplication.UpdateAsync(id, updateHotelDto);
             return NoContent();
         }
-
+        [Authorize(Roles = Roles.Administrator)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delele(int id)
         {
             await _hotelApplication.DeleteAsync(id);
             return NoContent();
         }
-
-
-
     }
 }

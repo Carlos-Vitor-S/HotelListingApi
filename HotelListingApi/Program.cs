@@ -75,6 +75,17 @@ builder.Services.AddControllers().AddOData(options =>
     options.Select().Filter().OrderBy();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "frontEndPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+         .AllowAnyHeader()
+         .AllowAnyMethod();
+    });
+
+});
+
 var app = builder.Build();
 
 
@@ -84,6 +95,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
+
+
+app.UseCors("frontEndPolicy");
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
