@@ -1,17 +1,18 @@
-﻿
-using HotelListing.Application.Models;
+﻿using HotelListing.Application.Models;
 using HotelListing.Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 
-namespace HotelListing.Api.Middleware
+namespace HotelListing.Shared.Middleware
 {
-    public class ExceptionHandlerMiddleware
+    public class ExceptionHandlerCustomMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+        private readonly ILogger<ExceptionHandlerCustomMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
+        public ExceptionHandlerCustomMiddleware(RequestDelegate next, ILogger<ExceptionHandlerCustomMiddleware> logger)
         {
             _next = next;
             _logger = logger;

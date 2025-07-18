@@ -21,7 +21,7 @@ namespace HotelListing.Api.Controllers
             _countryApplication = countryApplication;
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+       
         [EnableQuery]
         [HttpGet]     
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetAll()
@@ -30,7 +30,7 @@ namespace HotelListing.Api.Controllers
             return Ok(countriesDto);
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+        
         [HttpGet("paged")]
         public async Task<ActionResult<PagedResult<GetCountryDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
         {
@@ -38,7 +38,7 @@ namespace HotelListing.Api.Controllers
             return Ok(pagedCountries);
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}" )]
+       
         [HttpGet("{id}")]      
         public async Task<ActionResult<GetCountryDetailsDto>> GetDetails(int id)
         {
@@ -46,7 +46,7 @@ namespace HotelListing.Api.Controllers
             return Ok(country);
         }
 
-        [Authorize(Roles = Roles.Administrator)]
+        
         [HttpPost]
         public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto createCountryDto)
         {
@@ -54,7 +54,7 @@ namespace HotelListing.Api.Controllers
             return Created("Country Created", createCountryDto);
         }
 
-        [Authorize(Roles = Roles.Administrator)]
+        
         [HttpPut("{id}")]       
         public async Task<ActionResult<UpdateCountryDto>> Update(int id, [FromBody] UpdateCountryDto updateCountryDto)
         {
@@ -62,7 +62,6 @@ namespace HotelListing.Api.Controllers
             return Ok(updateCountryDto);
         }
 
-        [Authorize(Roles = Roles.Administrator)]
         [HttpDelete("{id}")]        
         public async Task<ActionResult<UpdateCountryDto>> Delete(int id)
         {
