@@ -53,12 +53,12 @@ namespace HotelListing.Api.Controllers
             return Created("Hotel Created", createHotelDto);
         }
 
-        [Authorize(Roles = Roles.Administrator)]
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateHotelDto updateHotelDto)
         {
             await _hotelApplication.UpdateAsync(id, updateHotelDto);
-            return NoContent();
+            return Ok(updateHotelDto);
         }
         [Authorize(Roles = Roles.Administrator)]
         [HttpDelete("{id}")]

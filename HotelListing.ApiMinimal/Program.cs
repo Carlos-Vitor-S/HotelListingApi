@@ -8,6 +8,7 @@ using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Services;
 using HotelListing.Infra.DataContext;
 using HotelListing.Infra.Repository;
+using HotelListing.Shared.Extensions;
 using HotelListing.Shared.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -31,26 +32,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
 // Authentication e Authorization
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero,
-        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-        ValidAudience = builder.Configuration["JwtSettings:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            builder.Configuration["JwtSettings:Key"]
-            ))
-    };
-});
+builder.Services.AddJwtAuthService(builder.Configuration);
 builder.Services.AddAuthorization();
 
 // Identity

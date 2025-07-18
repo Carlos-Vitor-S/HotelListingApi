@@ -34,8 +34,6 @@ namespace HotelListing.Application.Applications
             return await _countryService.Exists(id);
         }
 
-
-
         public async Task<GetCountryDto> Get(int id)
         {
             var country = await _countryService.Get(id);
