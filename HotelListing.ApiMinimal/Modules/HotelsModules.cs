@@ -12,29 +12,26 @@ namespace HotelListing.ApiMinimal.Modules
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            const string ResourceName = "Hotels";
+            const string ResourceName = "Hotels";       
             const string BaseRoute = $"/minimalApi/{ResourceName}";
-            const string RouteWithId = $"{BaseRoute}/{{id:int}}";
-       
-            app.MapGet(BaseRoute, async (IHotelApplication hotelApplication) =>
+
+            var AppGroup = app.MapGroup(BaseRoute).WithTags(ResourceName).WithOpenApi();
+
+            AppGroup.MapGet("/", async (IHotelApplication hotelApplication) =>
             {
                 var hotels = await hotelApplication.GetAllAsync();
                 return Results.Ok(hotels);
             })
-            .WithName("GetAllHotels")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("GetAllHotels");
 
-            app.MapGet(RouteWithId, async (int id , IHotelApplication hotelApplication) =>
+            AppGroup.MapGet("/{id}", async (int id, IHotelApplication hotelApplication) =>
             {
                 var hotel = await hotelApplication.Get(id);
                 return Results.Ok(hotel);
             })
-            .WithName("GetHotel")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("GetHotel");
 
-            app.MapGet($"{BaseRoute}/paged" , async (int pageNumber , int pageSize , IHotelApplication hotelApplication) =>
+            AppGroup.MapGet("/paged", async (int pageNumber, int pageSize, IHotelApplication hotelApplication) =>
             {
                 var paginationParameters = new PaginationParameters
                 {
@@ -45,38 +42,31 @@ namespace HotelListing.ApiMinimal.Modules
                 var countries = await hotelApplication.GetAllByPageAsync(paginationParameters);
                 return Results.Ok(countries);
             })
-            .WithName("GetAllHotelsByPage")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("GetAllHotelsByPage");
 
-            app.MapPost(BaseRoute, async (CreateHotelDto createHotelDto, IHotelApplication hotelApplication) =>
+            AppGroup.MapPost("/", async (CreateHotelDto createHotelDto, IHotelApplication hotelApplication) =>
             {
                 await hotelApplication.CreateAsync(createHotelDto);
                 return Results.Created("Hotel Created", createHotelDto);
             })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Administrator})
-            .WithName("CreateHotel")
-            .WithTags(ResourceName)
-            .WithOpenApi();
-             
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Administrator })
+            .WithName("CreateHotel");
 
-            app.MapPut(RouteWithId, async (int id, UpdateHotelDto updateHotelDto, IHotelApplication hotelApplication) =>
+            AppGroup.MapPut("/{id:int}", async (int id, UpdateHotelDto updateHotelDto, IHotelApplication hotelApplication) =>
             {
-                await hotelApplication.UpdateAsync(id: id, updateHotelDto : updateHotelDto);
+                await hotelApplication.UpdateAsync(id: id, updateHotelDto: updateHotelDto);
                 return Results.Ok(updateHotelDto);
             })
-            .WithName("UpdateHotel")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("UpdateHotel");
 
-            app.MapDelete(RouteWithId, async(int id , IHotelApplication hotelApplication) =>
+
+            AppGroup.MapDelete("/{id:int}", async (int id, IHotelApplication hotelApplication) =>
             {
                 await hotelApplication.DeleteAsync(id);
                 return Results.NoContent();
             })
-            .WithName("DeleleHotel")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("DeleleHotel");
+              
         }
     }
 } 

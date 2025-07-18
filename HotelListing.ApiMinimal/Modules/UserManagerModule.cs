@@ -12,23 +12,21 @@ namespace HotelListing.ApiMinimal.Modules
             const string ResourceName = "UserManager";
             const string BaseRoute = "/minimalApi";
 
-            app.MapPost($"{BaseRoute}/Register", async(RegisterUserDto registerUserDto , string role , IUserManagerApplication userManagerApplication) =>
-            {
-                var authResponse = await userManagerApplication.RegisterAsync(registerUserDto , role : role );
-                return Results.Ok( authResponse );
-            })
-            .WithName("Register")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            var AppGroup = app.MapGroup(BaseRoute).WithTags(ResourceName).WithOpenApi();
 
-            app.MapPost($"{BaseRoute}/Login", async (LoginUserDto loginUserDto , IUserManagerApplication userManagerApplication) =>
+            AppGroup.MapPost("/Register", async (RegisterUserDto registerUserDto, string role, IUserManagerApplication userManagerApplication) =>
+            {
+                var authResponse = await userManagerApplication.RegisterAsync(registerUserDto, role: role);
+                return Results.Ok(authResponse);
+            })
+            .WithName("Register");
+
+            AppGroup.MapPost("/Login", async (LoginUserDto loginUserDto, IUserManagerApplication userManagerApplication) =>
             {
                 var authResponse = await userManagerApplication.LoginAsync(loginUserDto);
                 return Results.Ok(authResponse);
             })
-            .WithName("Login")
-            .WithTags(ResourceName)
-            .WithOpenApi();
+            .WithName("Login");
         }
     }
 }

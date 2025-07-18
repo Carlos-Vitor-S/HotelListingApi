@@ -20,7 +20,7 @@ namespace HotelListing.Api.Controllers
             _hotelApplication = hotelApplication;
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+      
         [HttpGet]  
         public async Task<ActionResult<IEnumerable<GetHotelDto>>> GetAll()
         {
@@ -28,7 +28,7 @@ namespace HotelListing.Api.Controllers
             return Ok(hotels);
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+       
         [HttpGet("{id}")]     
         public async Task<ActionResult<GetHotelDto>> Get(int id)
         {
@@ -36,7 +36,7 @@ namespace HotelListing.Api.Controllers
             return Ok(hotel);
         }
 
-        [Authorize(Roles = $"{Roles.Administrator},{Roles.NormalUser}")]
+       
         [EnableQuery]
         [HttpGet("paged")]
         public async Task<ActionResult<PagedResult<GetHotelDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
@@ -45,7 +45,7 @@ namespace HotelListing.Api.Controllers
             return hotels;
         }
 
-        [Authorize(Roles = Roles.Administrator)]
+       
         [HttpPost]      
         public async Task<ActionResult<CreateHotelDto>> Create([FromBody] CreateHotelDto createHotelDto)
         {
@@ -60,7 +60,7 @@ namespace HotelListing.Api.Controllers
             await _hotelApplication.UpdateAsync(id, updateHotelDto);
             return Ok(updateHotelDto);
         }
-        [Authorize(Roles = Roles.Administrator)]
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delele(int id)
         {
