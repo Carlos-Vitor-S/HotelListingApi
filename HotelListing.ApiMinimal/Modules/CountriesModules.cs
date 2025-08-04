@@ -2,6 +2,7 @@
 using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Models;
+using HotelListing.Application.Utils;
 
 namespace HotelListing.ApiMinimal.Modules
 {
@@ -46,7 +47,8 @@ namespace HotelListing.ApiMinimal.Modules
                 await countryApplication.CreateAsync(createCountryDto);
                 return Results.Created("Country Created", createCountryDto);
             })
-            .WithName("CreateCountry");
+            .WithName("CreateCountry")
+            .RequireAuthorization(policy => policy.RequireRole(Roles.Administrator, Roles.NormalUser));
 
             AppGroup.MapPut("/{id}", async (int id, UpdateCountryDto updateCountryDto, ICountryApplication countryApplication) =>
             {
@@ -60,7 +62,8 @@ namespace HotelListing.ApiMinimal.Modules
                 await countryApplication.DeleteAsync(id);
                 return Results.NoContent();
             })
-            .WithName("DeleteCountry");
+            .WithName("DeleteCountry")
+            .RequireAuthorization(policy => policy.RequireRole(Roles.Administrator));
         }
     }
 }

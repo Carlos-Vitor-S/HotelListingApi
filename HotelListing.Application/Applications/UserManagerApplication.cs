@@ -26,11 +26,11 @@ namespace HotelListing.Application.Applications
             return await _userManagerService.LoginAsync(user);
         }
 
-        public async Task<AuthResponse> RegisterAsync(RegisterUserDto registerUserDto , string role)
+        public async Task<AuthResponse> RegisterAsync(RegisterUserDto registerUserDto, string role)
         {
             var user = _mapper.Map<User>(registerUserDto);
 
-            return await _userManagerService.RegisterAsync(user , role);
+            return await _userManagerService.RegisterAsync(user, role);
         }
     }
 }

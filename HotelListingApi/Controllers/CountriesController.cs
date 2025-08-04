@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using HotelListing.Application.DTOs.CountryDTOs;
+﻿using HotelListing.Application.DTOs.CountryDTOs;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using HotelListing.Application.Utils;
 namespace HotelListing.Api.Controllers
 {
     [ApiController]
@@ -21,16 +18,16 @@ namespace HotelListing.Api.Controllers
             _countryApplication = countryApplication;
         }
 
-       
+
         [EnableQuery]
-        [HttpGet]     
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetAll()
         {
             var countriesDto = await _countryApplication.GetAllAsync();
             return Ok(countriesDto);
         }
 
-        
+
         [HttpGet("paged")]
         public async Task<ActionResult<PagedResult<GetCountryDto>>> GetAllByPage([FromQuery] PaginationParameters paginationParameters)
         {
@@ -38,15 +35,15 @@ namespace HotelListing.Api.Controllers
             return Ok(pagedCountries);
         }
 
-       
-        [HttpGet("{id}")]      
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<GetCountryDetailsDto>> GetDetails(int id)
         {
             var country = await _countryApplication.GetDetails(id);
             return Ok(country);
         }
 
-        
+
         [HttpPost]
         public async Task<ActionResult<CreateCountryDto>> Create([FromBody] CreateCountryDto createCountryDto)
         {
@@ -54,15 +51,15 @@ namespace HotelListing.Api.Controllers
             return Created("Country Created", createCountryDto);
         }
 
-        
-        [HttpPut("{id}")]       
+
+        [HttpPut("{id}")]
         public async Task<ActionResult<UpdateCountryDto>> Update(int id, [FromBody] UpdateCountryDto updateCountryDto)
         {
             await _countryApplication.UpdateAsync(id, updateCountryDto);
             return Ok(updateCountryDto);
         }
 
-        [HttpDelete("{id}")]        
+        [HttpDelete("{id}")]
         public async Task<ActionResult<UpdateCountryDto>> Delete(int id)
         {
             await _countryApplication.DeleteAsync(id);

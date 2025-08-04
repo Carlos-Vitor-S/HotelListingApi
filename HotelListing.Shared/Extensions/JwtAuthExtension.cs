@@ -8,9 +8,8 @@ namespace HotelListing.Shared.Extensions
 {
     public static class JwtAuthExtension
     {
-        public static IServiceCollection AddJwtAuthService(this IServiceCollection services , IConfiguration configuration) {
-
-
+        public static IServiceCollection AddJwtAuthService(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,9 +30,8 @@ namespace HotelListing.Shared.Extensions
                         ))
                 };
             });
-            
+
             return services;
         }
-
     }
 }

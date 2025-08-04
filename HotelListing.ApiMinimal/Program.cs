@@ -1,4 +1,3 @@
-
 using Carter;
 using HotelListing.Application.Applications;
 using HotelListing.Application.Interfaces;
@@ -10,19 +9,12 @@ using HotelListing.Infra.DataContext;
 using HotelListing.Infra.Repository;
 using HotelListing.Shared.Extensions;
 using HotelListing.Shared.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 using Microsoft.AspNetCore.Identity;
-
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Serviços principais
 builder.Services.AddDataProtection();
 builder.Services.AddCarter();
 builder.Services.AddDbContext<HotelListingContext>(options => options.UseNpgsql(connectionString));
@@ -40,7 +32,6 @@ builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<HotelListingContext>();
 
-
 // Repositories / Services / Applications
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
@@ -56,10 +47,9 @@ builder.Services.AddScoped<IUserManagerApplication, UserManagerApplication>();
 
 builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile), typeof(UserProfile));
 
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "frontEndPolicy", policy =>
+    options.AddPolicy(name: "allowOnlyLocalhostAccess", policy =>
     {
         policy.WithOrigins("http://localhost:3000")
          .AllowAnyHeader()
@@ -70,7 +60,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -78,8 +67,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-
-app.UseCors("frontEndPolicy");
+app.UseCors("allowOnlyLocalhostAccess");
 
 app.UseMiddleware<ExceptionHandlerCustomMiddleware>();
 app.UseHttpsRedirection();

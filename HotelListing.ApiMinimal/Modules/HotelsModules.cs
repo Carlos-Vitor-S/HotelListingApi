@@ -4,7 +4,6 @@ using HotelListing.Application.Interfaces;
 using HotelListing.Application.Models;
 using HotelListing.Application.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace HotelListing.ApiMinimal.Modules
 {
@@ -12,7 +11,7 @@ namespace HotelListing.ApiMinimal.Modules
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            const string ResourceName = "Hotels";       
+            const string ResourceName = "Hotels";
             const string BaseRoute = $"/minimalApi/{ResourceName}";
 
             var AppGroup = app.MapGroup(BaseRoute).WithTags(ResourceName).WithOpenApi();
@@ -59,14 +58,13 @@ namespace HotelListing.ApiMinimal.Modules
             })
             .WithName("UpdateHotel");
 
-
             AppGroup.MapDelete("/{id:int}", async (int id, IHotelApplication hotelApplication) =>
             {
                 await hotelApplication.DeleteAsync(id);
                 return Results.NoContent();
             })
             .WithName("DeleleHotel");
-              
+
         }
     }
-} 
+}

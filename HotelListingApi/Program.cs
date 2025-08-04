@@ -8,12 +8,9 @@ using HotelListing.Infra.DataContext;
 using HotelListing.Infra.Repository;
 using HotelListing.Shared.Extensions;
 using HotelListing.Shared.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
