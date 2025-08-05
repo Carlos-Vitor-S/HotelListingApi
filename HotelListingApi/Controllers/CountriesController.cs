@@ -39,7 +39,7 @@ namespace HotelListing.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetCountryDetailsDto>> GetDetails(int id)
         {
-            var country = await _countryApplication.GetDetails(id);
+            var country = await _countryApplication.GetDetailsAsync(id);
             return Ok(country);
         }
 

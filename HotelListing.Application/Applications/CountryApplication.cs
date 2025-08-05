@@ -29,14 +29,14 @@ namespace HotelListing.Application.Applications
             await _countryService.DeleteAsync(id);
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            return await _countryService.Exists(id);
+            return await _countryService.ExistsAsync(id);
         }
 
-        public async Task<GetCountryDto> Get(int id)
+        public async Task<GetCountryDto> GetAsync(int id)
         {
-            var country = await _countryService.Get(id);
+            var country = await _countryService.GetAsync(id);
             var countryDto = _mapper.Map<GetCountryDto>(country);
             return countryDto;
         }
@@ -70,16 +70,16 @@ namespace HotelListing.Application.Applications
             };
         }
 
-        public async Task<GetCountryDetailsDto> GetDetails(int id)
+        public async Task<GetCountryDetailsDto> GetDetailsAsync(int id)
         {
-            var country = await _countryService.GetDetails(id);
+            var country = await _countryService.GetDetailsAsync(id);
             var countryDto = _mapper.Map<GetCountryDetailsDto>(country);
             return countryDto;
         }
 
         public async Task UpdateAsync(int id, UpdateCountryDto updateCountryDto)
         {
-            var country = await _countryService.Get(id);
+            var country = await _countryService.GetAsync(id);
             _mapper.Map(updateCountryDto, country);
             await _countryService.UpdateAsync(country);
         }

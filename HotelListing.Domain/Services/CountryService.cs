@@ -16,7 +16,7 @@ namespace HotelListing.Domain.Services
 
         public async Task CreateAsync(Country country)
         {
-            var countryExists = await Exists(country.Id);
+            var countryExists = await ExistsAsync(country.Id);
 
             if (countryExists)
             {
@@ -28,7 +28,7 @@ namespace HotelListing.Domain.Services
 
         public async Task DeleteAsync(int id)
         {
-            var countryExists = await Exists(id);
+            var countryExists = await ExistsAsync(id);
 
             if (!countryExists)
             {
@@ -38,20 +38,20 @@ namespace HotelListing.Domain.Services
             await _countryRepository.DeleteAsync(id);
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            return await _countryRepository.Exists(id);
+            return await _countryRepository.ExistsAsync(id);
         }
 
-        public async Task<Country> Get(int id)
+        public async Task<Country> GetAsync(int id)
         {
-            var countryExists = await Exists(id);
+            var countryExists = await ExistsAsync(id);
 
             if (!countryExists)
             {
                 throw new NotFoundCustomException(key: id.ToString(), name: "Country");
             }
-            return await _countryRepository.Get(id);
+            return await _countryRepository.GetAsync(id);
         }
 
         public IQueryable<Country> GetAllAsQueryable()
@@ -65,21 +65,21 @@ namespace HotelListing.Domain.Services
         }
 
 
-        public async Task<Country> GetDetails(int id)
+        public async Task<Country> GetDetailsAsync(int id)
         {
-            var countryExists = await Exists(id);
+            var countryExists = await ExistsAsync(id);
 
             if (!countryExists)
             {
                 throw new NotFoundCustomException(key: id.ToString(), name: "Country");
             }
 
-            return await _countryRepository.GetDetails(id);
+            return await _countryRepository.GetDetailsAsync(id);
         }
 
         public async Task UpdateAsync(Country country)
         {
-            var countryExists = await Exists(country.Id);
+            var countryExists = await ExistsAsync(country.Id);
 
             if (!countryExists)
             {

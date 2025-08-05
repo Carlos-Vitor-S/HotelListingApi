@@ -24,7 +24,7 @@ namespace HotelListing.ApiMinimal.Modules
 
             AppGroup.MapGet("/{id}", async (int id, ICountryApplication countryApplication) =>
             {
-                var country = await countryApplication.GetDetails(id);
+                var country = await countryApplication.GetDetailsAsync(id);
                 return Results.Ok(country);
             })
             .WithName("GetCountryDetails");

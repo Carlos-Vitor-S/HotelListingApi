@@ -13,10 +13,9 @@ namespace HotelListing.Domain.Services
         {
             _hotelRepository = hotelRepository;
         }
-
         public async Task CreateAsync(Hotel hotel)
         {
-            var hotelExists = await Exists(hotel.Id);
+            var hotelExists = await ExistsAsync(hotel.Id);
 
             if (hotelExists)
             {
@@ -28,7 +27,7 @@ namespace HotelListing.Domain.Services
 
         public async Task DeleteAsync(int id)
         {
-            var hotelExists = await Exists(id);
+            var hotelExists = await ExistsAsync(id);
 
             if (!hotelExists)
             {
@@ -38,21 +37,21 @@ namespace HotelListing.Domain.Services
             await _hotelRepository.DeleteAsync(id);
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            return await _hotelRepository.Exists(id);
+            return await _hotelRepository.ExistsAsync(id);
         }
 
-        public async Task<Hotel> Get(int id)
+        public async Task<Hotel> GetAsync(int id)
         {
-            var hotelExists = await _hotelRepository.Exists(id);
+            var hotelExists = await _hotelRepository.ExistsAsync(id);
 
             if (!hotelExists)
             {
                 throw new NotFoundCustomException(key: id.ToString(), name: "Hotel");
             }
 
-            return await _hotelRepository.Get(id);
+            return await _hotelRepository.GetAsync(id);
         }
 
         public IQueryable<Hotel> GetAllAsQueryable()
@@ -67,7 +66,7 @@ namespace HotelListing.Domain.Services
 
         public async Task UpdateAsync(Hotel hotel)
         {
-            var hotelExists = await _hotelRepository.Exists(hotel.Id);
+            var hotelExists = await _hotelRepository.ExistsAsync(hotel.Id);
 
             if (!hotelExists)
             {

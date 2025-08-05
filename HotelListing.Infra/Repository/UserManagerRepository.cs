@@ -15,7 +15,6 @@ namespace HotelListing.Infra.Repository
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
 
-
         public UserManagerRepository(UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;

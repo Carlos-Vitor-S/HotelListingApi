@@ -36,7 +36,7 @@ namespace HotelListing.Infra.Repository
             return _context.Set<T>().AsQueryable();
         }
 
-        public async Task<T> Get(int id)
+        public async Task<T> GetAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -47,9 +47,9 @@ namespace HotelListing.Infra.Repository
             await SaveChangesAsync();
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            var element = await Get(id);
+            var element = await GetAsync(id);
             return element != null;
         }
 
@@ -57,7 +57,5 @@ namespace HotelListing.Infra.Repository
         {
             await _context.SaveChangesAsync();
         }
-
-
     }
 }

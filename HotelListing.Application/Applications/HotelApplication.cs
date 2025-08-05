@@ -31,14 +31,14 @@ namespace HotelListing.Application.Applications
             await _hotelService.DeleteAsync(id);
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            return await _hotelService.Exists(id);
+            return await _hotelService.ExistsAsync(id);
         }
 
-        public async Task<GetHotelDto> Get(int id)
+        public async Task<GetHotelDto> GetAsync(int id)
         {
-            var hotel = await _hotelService.Get(id);
+            var hotel = await _hotelService.GetAsync(id);
             var hotelDto = _mapper.Map<GetHotelDto>(hotel);
             return hotelDto;
         }
@@ -70,12 +70,11 @@ namespace HotelListing.Application.Applications
                 CurrentPage = paginationParameters.PageNumber,
                 PageSize = paginationParameters.PageSize
             };
-
         }
 
         public async Task UpdateAsync(int id, UpdateHotelDto updateHotelDto)
         {
-            var hotel = await _hotelService.Get(id);
+            var hotel = await _hotelService.GetAsync(id);
             _mapper.Map(updateHotelDto, hotel);
             await _hotelService.UpdateAsync(hotel);
         }
