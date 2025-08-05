@@ -1,7 +1,6 @@
 ﻿using HotelListing.Domain.Exceptions;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
-using System.Diagnostics.Metrics;
 
 namespace HotelListing.Tests.FakeRepository
 {
@@ -24,7 +23,6 @@ namespace HotelListing.Tests.FakeRepository
                 new Hotel { Id = 2, Name = "Hotel Central", Address = "Avenida B, 456", Rating = 3.8, CountryId = 1 },
                 new Hotel { Id = 3, Name = "Pousada Sol", Address = "Rua C, 789", Rating = 4.0, CountryId = 2 }
             };
-
         }
 
         public Task<Country> GetAsync(int id)
@@ -53,9 +51,9 @@ namespace HotelListing.Tests.FakeRepository
             return element != null;
         }
 
-        public IQueryable<Country> GetAllAsQueryable()
+        IQueryable<Country> ICountryService.GetAllAsQueryable()
         {
-            throw new NotImplementedException();
+            return _countries.AsQueryable();
         }
 
         public async Task<IEnumerable<Country>> GetAllAsync()
