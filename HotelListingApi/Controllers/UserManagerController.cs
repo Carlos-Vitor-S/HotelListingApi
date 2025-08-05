@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HotelListing.Application.DTOs.ApiAuthDTOs;
+﻿using HotelListing.Application.DTOs.ApiAuthDTOs;
 using HotelListing.Application.DTOs.UserDTOs;
 using HotelListing.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;

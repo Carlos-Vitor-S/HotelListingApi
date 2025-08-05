@@ -15,7 +15,6 @@ namespace HotelListing.Infra.Repository
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
 
-
         public UserManagerRepository(UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
@@ -36,7 +35,7 @@ namespace HotelListing.Infra.Repository
             };
         }
 
-        public async Task<IdentityResult> Register(User user , string role)
+        public async Task<IdentityResult> Register(User user, string role)
         {
             var identityUser = new IdentityUser
             {
@@ -46,10 +45,11 @@ namespace HotelListing.Infra.Repository
 
             var result = await _userManager.CreateAsync(identityUser, user.Password);
 
-            if (result.Succeeded) { 
+            if (result.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(identityUser, role);
             }
-          
+
             return result;
         }
 

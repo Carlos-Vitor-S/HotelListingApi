@@ -13,7 +13,7 @@ namespace HotelListing.Infra.Repository
             _context = context;
         }
 
-        public async Task<Country> GetDetails(int id)
+        public async Task<Country> GetDetailsAsync(int id)
         {
             return await _context.Countries.Include(c => c.Hotels).FirstOrDefaultAsync(c => c.Id == id);
         }

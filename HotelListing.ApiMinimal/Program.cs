@@ -1,3 +1,4 @@
+using Carter;
 using HotelListing.Application.Applications;
 using HotelListing.Application.Interfaces;
 using HotelListing.Application.Mappings;
@@ -9,22 +10,20 @@ using HotelListing.Infra.Repository;
 using HotelListing.Shared.Extensions;
 using HotelListing.Shared.Middleware;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Serviços principais
 builder.Services.AddDataProtection();
+builder.Services.AddCarter();
 builder.Services.AddDbContext<HotelListingContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 
-// Authentication e Authorization
+builder.Services.AddSwaggerGen();
 
+// Authentication e Authorization
 builder.Services.AddJwtAuthService(builder.Configuration);
 builder.Services.AddAuthorization();
 
@@ -32,7 +31,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<HotelListingContext>();
-
 
 // Repositories / Services / Applications
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -49,15 +47,9 @@ builder.Services.AddScoped<IUserManagerApplication, UserManagerApplication>();
 
 builder.Services.AddAutoMapper(typeof(CountryProfile), typeof(HotelProfile), typeof(UserProfile));
 
-//Filtering, selecting , ordering etc
-builder.Services.AddControllers().AddOData(options =>
-{
-    options.Select().Filter().OrderBy();
-});
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "frontEndPolicy", policy =>
+    options.AddPolicy(name: "allowOnlyLocalhostAccess", policy =>
     {
         policy.WithOrigins("http://localhost:3000")
          .AllowAnyHeader()
@@ -68,7 +60,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -76,11 +67,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("frontEndPolicy");
+app.UseCors("allowOnlyLocalhostAccess");
+
 app.UseMiddleware<ExceptionHandlerCustomMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
-
+app.MapCarter();
 app.Run();

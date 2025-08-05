@@ -1,5 +1,4 @@
-﻿
-using HotelListing.Domain.Exceptions;
+﻿using HotelListing.Domain.Exceptions;
 using HotelListing.Domain.Interfaces.IRepositories;
 using HotelListing.Domain.Interfaces.IServices;
 using HotelListing.Domain.Models;
@@ -22,7 +21,6 @@ namespace HotelListing.Domain.Services
             if (identityUser == null || !await _userManagerRepository.CheckPasswordAsync(identityUser, user.Password))
             {
                 throw new UnauthorizedAccessCustomException(name: "Credentials", key: user.Email);
-                
             }
 
             var token = await _userManagerRepository.GenerateTokenAsync(identityUser);
@@ -32,23 +30,23 @@ namespace HotelListing.Domain.Services
                 UserId = identityUser.Id,
                 Token = token
             };
-
         }
 
-        public async Task<AuthResponse> RegisterAsync(User user , string role)
+        public async Task<AuthResponse> RegisterAsync(User user, string role)
         {
-            var result = await _userManagerRepository.Register(user , role);
+            var result = await _userManagerRepository.Register(user, role);
             var existingUser = await _userManagerRepository.FindByEmailAsync(user.Email);
 
-            if (existingUser!=null) {
-                throw new ConflictCustomException(name : "User" , key : user.Email );
+            if (existingUser != null)
+            {
+                throw new ConflictCustomException(name: "User", key: user.Email);
             }
 
             if (!result.Succeeded)
             {
                 var errors = string.Join("; ", result.Errors.Select(e => e.Description));
-                throw new ApplicationCustomException(name : "Register" , key : errors);
-               
+                throw new ApplicationCustomException(name: "Register", key: errors);
+
             }
 
             var identityUser = await _userManagerRepository.FindByEmailAsync(user.Email);

@@ -4,12 +4,12 @@ namespace HotelListing.Domain.Interfaces.IServices
 {
     public interface IHotelService
     {
-        Task<Hotel> Get(int id);
+        Task<Hotel> GetAsync(int id);
         Task<IEnumerable<Hotel>> GetAllAsync();
         IQueryable<Hotel> GetAllAsQueryable();
         Task CreateAsync(Hotel hotel);
         Task UpdateAsync(Hotel hotel);
         Task DeleteAsync(int id);
-        Task<bool> Exists(int id);
+        Task<bool> ExistsAsync(int id);
     }
 }
