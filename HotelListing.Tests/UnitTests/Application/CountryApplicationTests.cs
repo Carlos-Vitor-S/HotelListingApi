@@ -45,7 +45,7 @@ namespace HotelListing.Tests.UnitTests.Application
 
             // Act
             Func<Task> act = () => application.CreateAsync(expectedCountry);
-            
+
             // Assert
             await act.Should().NotThrowAsync();
             _mockCountryService.Verify(service => service.CreateAsync(It.Is<Country>(c =>
@@ -128,7 +128,7 @@ namespace HotelListing.Tests.UnitTests.Application
 
             // Act
 
-            Func<Task> act = () => application.UpdateAsync(ID , updateCountryDto);
+            Func<Task> act = () => application.UpdateAsync(ID, updateCountryDto);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundCustomException>();
@@ -319,5 +319,8 @@ namespace HotelListing.Tests.UnitTests.Application
             act.CurrentPage.Should().Be(PAGE_NUMBER);
             act.PageSize.Should().Be(PAGE_SIZE);
         }
+
+
+
     }
 }
